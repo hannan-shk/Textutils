@@ -1,7 +1,7 @@
 import { isLabelWithInternallyDisabledControl } from '@testing-library/user-event/dist/utils';
 import React, {useState} from 'react';
 
-function About2(){
+function About2(props){
 
     const [myStyle,setStyle] = useState({
         color : 'black',
@@ -16,6 +16,7 @@ function About2(){
     color : 'white',
     backgroundColor : 'black'
    })
+   props.showAlert2('About 2 has turned in dark!','success');
    
    }
 
@@ -25,6 +26,7 @@ function About2(){
         color : 'black',
         backgroundColor : 'white'
        })
+       props.showAlert2('About 2 has turned in light!','success');
 
     }
 

@@ -1,16 +1,14 @@
-import logo from './logo.svg';
 import './App.css';
 import Navbar from './components/Navbar';
 import Textarea from './components/Textarea';
 import About from './components/About';
 import About2 from './components/About2';
-import React,{useEffect,useState} from 'react';
+import React,{useState} from 'react';
 import Alert from'./components/Alert';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
 } from "react-router-dom";
 
 
@@ -28,24 +26,28 @@ function App() {
       setAlert(null);
     }, 2000);
   }
+
+
+  const removeBodyClasses = () =>{
+    document.body.classList.remove('bg-light');
+    document.body.classList.remove('bg-dark');
+    document.body.classList.remove('bg-info');
+    document.body.classList.remove('bg-warning');
+    document.body.classList.remove('bg-success');
+    document.body.classList.remove('bg-danger');
+    document.body.classList.remove('bg-primary');
+  }
   
 
-  const toggleMode = () =>{
+  const toggleMode = (cls) =>{
+    removeBodyClasses();
+  console.log(cls);
+  document.body.classList.add('bg-'+cls);
     if(mode === 'light'){
-
       setMode ('dark')
       setSwText('Enable Light Mode')
       document.body.style.backgroundColor = '#091f42';
       showAlert('Dark mode has been enabled','success')
-      document.title = 'TextUtils - Dark Mode';
-
-      // setInterval(() => {
-      //   document.title = 'TextUtils is Amazing Web'
-      // }, 2000);
-
-      // setInterval(() => {
-      //   document.title = 'Install TextUtils Now'
-      // }, 1500);
 
     }else if(mode === 'dark'){
 
@@ -53,7 +55,6 @@ function App() {
       setSwText('Enable Dark Mode')
       document.body.style.backgroundColor = 'white';
       showAlert('Light mode has been enabled','success')
-      document.title = 'TextUtils - Light Mode';
 
     }
   }
@@ -62,23 +63,22 @@ function App() {
 
   return (<>
   <Router>
-  <Navbar title="TextUtils" about="About" mode2={mode} sw2Text={swText} toggleMode2={toggleMode}/>
+  <Navbar title="TextUtils" about="About" sw2Text={swText} mode2={mode} toggleMode2={toggleMode}/>
   <Alert alert2={alert}/>
   <div className="container my-8">
   <Switch>
-          <Route exact path="/about">
-            <About />
+          <Route exact path="/">
+          <Textarea showAlert2={showAlert} heading="Please enter your text below:" mode2={mode} place='Enter your text here'/>
           </Route>
-          <Route path="/">
-          <Textarea showAlert2={showAlert} heading="Enter your text below:" mode2={mode} place='Enter your text here'/>
+          <Route exact path="/about">
+          <About mode2={mode} showAlert2={showAlert} />
           </Route>
           <Route exact path="/topics">
-            <About2 />
+            <About2 showAlert2={showAlert} />
           </Route>
   </Switch>
   </div>
-  </Router>
-  {/* <About2 /> */}
+   </Router>
   </>
   );
 }
